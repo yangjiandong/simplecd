@@ -14,11 +14,11 @@ import sqlite3
 import fetchvc
 import time
 
-web.config.debug = False
+web.config.debug = True#False
 
 path = os.path.dirname(os.path.realpath(sys.argv[0]))
 
-db = web.database(dbn='sqlite', db='f:/verycd.sqlite3.db')#db='verycd.sqlite3.db')
+db = web.database(dbn='sqlite', db='F:/simplecd-desktop-db-2010-04-04/verycd.sqlite3.db')#db='verycd.sqlite3.db')
 #customdb = web.database(dbn='sqlite',db='custom.sqlite3.db')
 
 conn = sqlite3.connect('custom.sqlite3.db')
