@@ -1,0 +1,121 @@
+$def with (vcp)
+$code
+    vc=vcp[0]
+    pages=vcp[1]
+    arg=vcp[2]
+    if vcp[3] == None:
+        q=''
+    else:
+        q=vcp[3]
+    num=vcp[4]
+    if vcp[5]:
+        cat=vcp[5]
+    else:
+        cat=''
+    hot = vcp[6]
+
+<HTML>
+	<HEAD>
+		<title>SimpleCD|精简版的VeryCD</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<META NAME="keywords" CONTENT="VeryCD,精简版,emule,电骡,下载">
+		<META NAME="description" content="SimpleCD专注于为VeryCD做简单的备份，同时也提供了基本的搜索列表功能">
+		<LINK href="/static/main_02.css" type="text/css" rel="stylesheet">
+	</HEAD>
+
+	<BODY>
+		<table cellpadding=0 cellspacing=1 align=center width=760>
+			<tr><td>
+				<a href="/static/tutorial.html" target="_blank">本站源码</a>&nbsp;|&nbsp;
+				<a href="/bbs/viewthread.php?tid=26&page=1&extra=#pid74" target="_blank">全站html打包下载</a>&nbsp;|&nbsp;
+				<a href="/bbs/index.php" target="_blank">论坛</a>&nbsp;|&nbsp;
+				<a href="/feed" target="_blank">订阅更新</a>&nbsp;|&nbsp;
+				<a href="/bbs/forumdisplay.php?fid=3" >报告错误</a>&nbsp;|&nbsp;
+				<a href="/static/about.html" target="_blank">关于</a>
+			</td></tr>
+		</table>
+		<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr><td width=218><a href=/><img src=/static/simplecd.png height=68></a></td>
+				<td valign=middle>
+				怕了国内那些大爷了，所以为VeryCD做了个简单备份</a>&nbsp;<br>
+	                <form id=search method=get action=/>
+						<INPUT type=text name=q size=30 value="$q">
+						$if cat != '':
+							<INPUT type=hidden name=cat value="$cat">
+						<INPUT type=submit value="SimpleCD搜索">
+					</form>
+				</td></tr>
+		</table>
+		$if q == '':
+			<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr><td>
+			$:hot
+			</td></tr>
+			</table>
+		<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr><td align=right style="font-size:20px">
+				分类：
+				$if cat=='':<b>
+				<a class=cat href="/?q=$q&page=$pages[0]">全部</a>
+				$if cat=='':</b>
+				$for catname in ['电影','剧集','音乐','游戏','动漫','综艺','软件','资料']:
+					$if cat==catname.decode('utf-8'):<b>
+					<a class=cat href="/?q=$q&cat=$catname&page=1">$catname</a>
+					$if cat==catname.decode('utf-8'):</b>
+			</td></tr>
+		</table>
+		<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr>
+				<td class=bt width=338> &nbsp;&nbsp;&nbsp;<b>最近更新的资源</b></td>
+				<td class=bt>摘要</td>
+				<td class=bt width=128>更新时间</td>
+				<td class=bt width=78>VeryCD原链</td>
+			</tr>
+			$for r in vc:
+				<tr bgcolor=#ffffff height=30>
+					<td class=xt valign=middle><a href="/?id=$r.verycdid">$:r.title</a></td>
+					<td class=xt>$:r.brief</td>
+					<td class=xt>$:r.updtime</td>
+					<td class=xt><a href="http://www.verycd.com/topics/$r.verycdid/">Topic$r.verycdid</a></td>
+				</tr>
+		</table>
+		<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr bgcolor=#ffffff height=30 align=right>
+				<td>
+				<font size=4>
+					<a href="$arg=1">首页</a>
+					<a href="$arg=$pages[0]">上一页</a>
+					$for p in pages[3:]:
+						<a href="$arg=$p">$p</a>
+					<a href="$arg=$pages[1]">下一页</a>
+					<a href="$arg=$pages[2]">末页</a>
+				</font>
+				</td>
+			</tr>
+		</table>
+		$if q != '' and num<=5:
+			<table cellpadding=0 cellspacing=0 align=center width=460>
+				<tr>
+					<td width=300 style="color:red">
+						对搜索结果不满意？VeryCD上有更多结果？试试
+					</td>
+					<td>
+						<form id=search method=get action=/>
+							<input type=hidden name=qa size=10 value="$q">
+							<input type=submit value="深度搜索">
+						</form>
+					</td>
+				</tr>
+			</table>
+		<script type="text/javascript">
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-10627564-5']);
+			  _gaq.push(['_trackPageview']);
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+			  })();
+		</script>
+	</BODY>
+</HTML>

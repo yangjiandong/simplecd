@@ -1,0 +1,42 @@
+$def with (req)
+<HTML>
+	<HEAD>
+		<title>SimpleCD|精简版的VeryCD</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<META NAME="keywords" CONTENT="VeryCD,精简版,emule,电骡,下载">
+		<META NAME="description" content="SimpleCD专注于为VeryCD做简单的备份，同时也提供了基本的搜索列表功能">
+		<META HTTP-EQUIV="refresh" CONTENT="15;URL=/">
+
+		<LINK href="/static/main_02.css" type="text/css" rel="stylesheet">
+	</HEAD>
+
+	<BODY>
+		<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr><td width=218><a href=/><img src=/static/simplecd.png height=68></a></td>
+				<td valign=middle>
+				怕了国内那些大爷了，所以为VeryCD做了个简单备份<br>
+	                <form id=search method=get action=/>
+					<INPUT type=text name=q size=30 value="">
+						<INPUT type=submit value="SimpleCD搜索">
+					</form>
+				</td></tr>
+		</table>
+			<table cellpadding=0 cellspacing=0 align=center width=600>
+				<tr>
+					<td width=600 style="color:red">
+					<h2>	搜索<strong>"$req"</strong>已经提交队列，请等待服务器处理，如果空闲的话，5分钟左右就能处理好，请5分钟以后再次搜索同一关键字，说不定就有了。本页面将在十五秒钟之后自动跳转回主页，或者<a href="/">点此直接返回主页</a>。</h2>
+					</td>
+				</tr>
+			</table>
+		<script type="text/javascript">
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-10627564-5']);
+			  _gaq.push(['_trackPageview']);
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+			  })();
+		</script>
+	</BODY>
+</HTML>

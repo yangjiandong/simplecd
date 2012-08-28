@@ -1,0 +1,114 @@
+$def with (r)
+
+$code:
+    rec = r[0]
+    fl = r[1]
+    id = r[2]
+    name = 'topic'+id
+
+    def emsize(link):
+        if len(link.split('|'))<4:
+            return 'Unknown';
+        n = int(link.split('|')[3])
+        if n < 1024:
+            return '%d Bytes' % n
+        elif n < 1024*1024:
+            n2 = n/1.0/1024
+            return '%3.1f KB' % n2
+        elif n < 1024*1024*1024:
+            n2 = n/1.0/1024/1024
+            return '%3.1f MB' % n2
+        elif n < 1024*1024*1024*1024:
+            n2 = n/1.0/1024/1024/1024
+            return '%3.1f GB' % n2
+    def format(content):
+        return content.replace('\n','<br>')
+    def emlink(ed2k):
+        links = ed2k.split('`')
+        rtn = '''<table cellspacing="1" cellpadding="0" border="0" width="760" class="ed2kzone" align="center">
+        <tbody>
+        <tr class="ed2kheader">
+        <td align="center" colspan="4">'''+'下面是用户共享的文件列表，推荐使用'.decode('utf-8')+'''<a href="http://www.emule-project.net/home/perl/general.cgi?l=42&rm=download" target="_blank">eMule</a>  '''+'进行下载，您可以点击这些文件名进行下载'.decode('utf-8')+'''</td>
+        </tr>'''
+
+        i = 0
+        while i+1 < len(links):
+            if links[i].startswith('ed2k') and 'ed2k://' in links[i+1]:
+                rtn += '''<tr class="ed2kitem">
+                <td width="20"><input type="checkbox" checked="checked" onclick="em_size(''+this.name+'');" value="%s" name="%s"/></td>
+                <td width="640"><a ed2k="%s" href="%s">%s</a></td>
+                <td width="100" name="%ssize">%s</td></tr>\n''' % (links[i],name,links[i],links[i],links[i+2],name,emsize(links[i]))
+                i += 3
+            else:
+                rtn += '''<tr class="ed2kitem">
+                <td width="20"><input type="checkbox" checked="checked" onclick="em_size(''+this.name+'');" value="%s" name="%s"/></td>
+                <td width="640"><a ed2k="%s" href="%s">%s</a></td>
+                <td width="100" name="%ssize">%s</td></tr>''' % (links[i],name,links[i],links[i],links[i+1],name,emsize(links[i]))
+                i += 2
+        rtn += '''<tr class="ed2kitem">
+        <td width="20"><input type="checkbox" checked="" onclick="checkAll('%s',this.checked)" class="forminput" id="checkall_%s"/></td>
+        <td colspan="1"><input type="button" onclick="download('%s',0,1)" class="filebutton" value="''' % (name,name,name)
+        rtn += '下载选中的文件'.decode('utf-8')
+        rtn += '''"/> <input type="button" onclick="copy('%s')" class="filebutton" value="''' % name
+        rtn += '复制选中的链接'.decode('utf-8')
+        rtn += '''"/><input id="copyselect" type="button" onclick="javascript:showPopup(copy2popup('%s'),0,0,760,countlink('%s')*60);" value="''' % (name,name)
+        rtn += '非IE浏览器选此复制'.decode('utf-8')
+        rtn += '''"></td><td width="70" id="size_%s"></td></tr></tbody></table>''' % name
+        return rtn
+
+<HTML>
+	<HEAD>
+		<title>SimpleCD:让分享变得简单&nbsp;$rec.title</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<META NAME="keywords" CONTENT="VeryCD,精简版,emule,电骡,下载">
+		<META NAME="description" content="SimpleCD电骡资源页面：$rec.title；摘要：$rec.brief">
+		<LINK href="/static/main_02.css" type="text/css" rel="stylesheet">
+		<script language="javascript" type="text/javascript" src="/static/common.js"></script> 
+	</HEAD>
+
+$if fl:
+	<h3>复制下列链接，在emule中选择新建任务即可</h3>
+	$:fl
+$else:
+	<BODY onload=init('$name');>
+	<div name="all"align=center width=762>
+		<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr><td width=218><a href=/><img src=/static/simplecd.png height=68></a>
+				<td valign=middle>
+				&nbsp;
+	                <form id=search method=get action=/>
+					<INPUT type=text name=q size=30>
+						<INPUT type=submit value="SimpleCD搜索">
+					</form>
+				</td></tr>
+		</table>
+		<table cellpadding=0 cellspacing=0 align=center width=760>
+			<tr><td class=bt><b>VeryCD Topic ID:</b> $:rec.verycdid</td></tr>
+			<tr><td><font size="4"><b>$:rec.title</b></font>&nbsp;|&nbsp;<a href="http://www.verycd.com/topics/$:rec.verycdid">from VeryCD</a></td></tr>
+			<tr><td><b>状态：</b>$:rec.status</td></td>
+			<tr><td><b>摘要：</b>$:rec.brief</td></tr>
+			<tr><td><b>发布时间：</b>$:rec.pubtime</td></tr>
+			<tr><td><b>更新时间：</b>$:rec.updtime</td></tr>
+			<tr><td><b>类别：</b>$:rec.category1,$:rec.category2</td></tr>
+
+		</table>
+		$:emlink(rec.ed2k)
+		<div align=left height=0 id="popupcontent">This is a popup window!</div>
+		<div align=center width=762>
+			<table align=center width=760 border=1>
+			<tr><td>$:format(rec.content)</td></tr>
+			</table>
+		</div>
+		<script type="text/javascript">
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-10627564-5']);
+			  _gaq.push(['_trackPageview']);
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+			  })();
+		</script>
+	</div>
+	<BODY>
+</HTML>
